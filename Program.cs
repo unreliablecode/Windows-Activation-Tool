@@ -33,6 +33,7 @@ class Program
                 Verb = "runas", 
                 Arguments = $"/K {activationCommand}",
                 UseShellExecute = true,
+                CreateNoWindow = true
             };
 
             Process.Start(psi).WaitForExit();
