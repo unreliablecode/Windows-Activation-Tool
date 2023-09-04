@@ -1,15 +1,19 @@
 using System;
 using System.Diagnostics;
+using Microsoft.Win32;
+using System.Management;
 
 class Program
 {
     static void Main(string[] args)
     {
-        // Print the current Windows version and edition
-        string windowsVersion = GetWindowsVersion();
-        string windowsEdition = GetWindowsEdition();
-        Console.WriteLine($"Current Windows Version: {windowsVersion}");
-        Console.WriteLine($"Current Windows Edition: {windowsEdition}");
+        // Print the current Windows version, edition, and OS name
+        //string windowsVersion = GetWindowsVersion();
+        //string windowsEdition = GetWindowsEdition();
+        string osName = GetOSFriendlyName();
+        //Console.WriteLine($"Current Windows Version: {windowsVersion}");
+        //Console.WriteLine($"Current Windows Edition: {windowsEdition}");
+        Console.WriteLine($"Operating System: {osName}");
 
         Console.WriteLine("Enter the Windows product key:");
         string productKey = Console.ReadLine();
@@ -29,12 +33,15 @@ class Program
 
     private static string GetWindowsVersion()
     {
+        RegistryKey registryKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
+        var buildNumber = registryKey.GetValue("UBR").ToString();
+
         Version version = Environment.OSVersion.Version;
         string versionString = $"{version.Major}.{version.Minor}";
 
-        if (version.Build != 0)
+        if (!string.IsNullOrEmpty(buildNumber))
         {
-            versionString += $".{version.Build}";
+            versionString += $".{buildNumber}";
         }
 
         return versionString;
@@ -54,12 +61,24 @@ class Program
                 }
             }
         }
-        catch (Exception Ex)
+        catch (Exception)
         {
-            Console.WriteLine(Ex.Message);
+            // Handle any exceptions that may occur while reading the registry
         }
 
         return edition;
+    }
+
+    public static string GetOSFriendlyName()
+    {
+        string result = string.Empty;
+        ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT Caption FROM Win32_OperatingSystem");
+        foreach (ManagementObject os in searcher.Get())
+        {
+            result = os["Caption"].ToString();
+            break;
+        }
+        return result;
     }
 
     private static bool ActivateWindows(string productKey)
