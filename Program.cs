@@ -5,6 +5,9 @@ class Program
 {
     static void Main(string[] args)
     {
+        // Print the current Windows version
+        Console.WriteLine("Current Windows Version: " + GetWindowsVersion());
+
         Console.WriteLine("Enter the Windows product key:");
         string productKey = Console.ReadLine();
 
@@ -21,6 +24,19 @@ class Program
         Console.ReadKey();
     }
 
+    private static string GetWindowsVersion()
+    {
+        Version version = Environment.OSVersion.Version;
+        string versionString = $"{version.Major}.{version.Minor}";
+
+        if (version.Build != 0)
+        {
+            versionString += $".{version.Build}";
+        }
+
+        return versionString;
+    }
+
     private static bool ActivateWindows(string productKey)
     {
         string activationCommand = $"slmgr.vbs /ipk {productKey}";
@@ -30,7 +46,7 @@ class Program
             ProcessStartInfo psi = new ProcessStartInfo
             {
                 FileName = "cmd.exe",
-                Verb = "runas", 
+                Verb = "runas",
                 Arguments = $"/K {activationCommand}",
                 UseShellExecute = true,
                 CreateNoWindow = true
