@@ -27,7 +27,15 @@ class Program
 
         try
         {
-            Process.Start("cmd.exe", $"/C {activationCommand}").WaitForExit();
+            ProcessStartInfo psi = new ProcessStartInfo
+            {
+                FileName = "cmd.exe",
+                Verb = "runas", 
+                Arguments = $"/K {activationCommand}",
+                UseShellExecute = true,
+            };
+
+            Process.Start(psi).WaitForExit();
             return true;
         }
         catch (Exception)
