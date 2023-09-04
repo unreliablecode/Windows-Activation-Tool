@@ -18,7 +18,7 @@ This is a simple command-line tool designed to help users activate Windows with 
 
 ## Usage
 
-1. Download the latest release of the Windows Activation Tool from the [Releases](https://github.com/yourusername/Windows-Activation-Tool/releases) page.
+1. Download the latest release of the Windows Activation Tool from the [Releases](https://github.com/unreliablecode/Windows-Activation-Tool/releases) page.
 
 2. Run the executable file (e.g., `WindowsActivationTool.exe`) from the command prompt or terminal.
 
@@ -36,7 +36,7 @@ This tool is intended to simplify the Windows activation process for legitimate 
 
 ## Support
 
-If you encounter any issues or have questions about using the Windows Activation Tool, please feel free to [create an issue](https://github.com/yourusername/Windows-Activation-Tool/issues) on this repository. We will do our best to assist you.
+If you encounter any issues or have questions about using the Windows Activation Tool, please feel free to [create an issue](https://github.com/unreliablecode/Windows-Activation-Tool/issues) on this repository. We will do our best to assist you.
 
 ## License
 
