@@ -5,8 +5,11 @@ class Program
 {
     static void Main(string[] args)
     {
-        // Print the current Windows version
-        Console.WriteLine("Current Windows Version: " + GetWindowsVersion());
+        // Print the current Windows version and edition
+        string windowsVersion = GetWindowsVersion();
+        string windowsEdition = GetWindowsEdition();
+        Console.WriteLine($"Current Windows Version: {windowsVersion}");
+        Console.WriteLine($"Current Windows Edition: {windowsEdition}");
 
         Console.WriteLine("Enter the Windows product key:");
         string productKey = Console.ReadLine();
@@ -35,6 +38,28 @@ class Program
         }
 
         return versionString;
+    }
+
+    private static string GetWindowsEdition()
+    {
+        string edition = string.Empty;
+
+        try
+        {
+            using (var regKey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion"))
+            {
+                if (regKey != null)
+                {
+                    edition = regKey.GetValue("EditionID") as string;
+                }
+            }
+        }
+        catch (Exception Ex)
+        {
+            Console.WriteLine(Ex.Message);
+        }
+
+        return edition;
     }
 
     private static bool ActivateWindows(string productKey)
