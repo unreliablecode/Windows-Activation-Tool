@@ -1,5 +1,3 @@
-Certainly, here's a sample GitHub README for your Windows activation program:
-
 ---
 
 # Windows Activation Tool
